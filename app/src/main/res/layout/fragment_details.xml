@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/match_number_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/main_margin"
+        android:text="@string/match_number"
+        app:layout_constraintBottom_toTopOf="@id/round_number_title"
+        app:layout_constraintEnd_toStartOf="@id/tv_match_number"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_match_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/match_number_title"
+        app:layout_constraintTop_toTopOf="@id/match_number_title"
+        tools:text="1" />
+
+    <TextView
+        android:id="@+id/round_number_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/main_margin"
+        android:text="@string/round_number"
+        app:layout_constraintBottom_toTopOf="@id/date_title"
+        app:layout_constraintEnd_toStartOf="@id/tv_round_number"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/match_number_title" />
+
+    <TextView
+        android:id="@+id/tv_round_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/round_number_title"
+        app:layout_constraintTop_toTopOf="@id/round_number_title"
+        tools:text="1" />
+
+    <TextView
+        android:id="@+id/date_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/main_margin"
+        android:text="@string/date"
+        app:layout_constraintBottom_toTopOf="@id/location_title"
+        app:layout_constraintEnd_toStartOf="@id/tv_date"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/round_number_title" />
+
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/date_title"
+        app:layout_constraintTop_toTopOf="@id/date_title"
+        tools:text="1" />
+
+    <TextView
+        android:id="@+id/location_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/main_margin"
+        android:text="@string/location"
+        app:layout_constraintBottom_toTopOf="@id/home_team_title"
+        app:layout_constraintEnd_toStartOf="@id/tv_location"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/date_title" />
+
+    <TextView
+        android:id="@+id/tv_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/location_title"
+        app:layout_constraintTop_toTopOf="@id/location_title"
+        tools:text="1" />
+
+    <TextView
+        android:id="@+id/home_team_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/main_margin"
+        android:text="@string/home_team"
+        app:layout_constraintBottom_toTopOf="@id/away_team_title"
+        app:layout_constraintEnd_toStartOf="@id/tv_home_team"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/location_title" />
+
+    <TextView
+        android:id="@+id/tv_home_team"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/home_team_title"
+        app:layout_constraintTop_toTopOf="@id/home_team_title"
+        tools:text="1" />
+
+    <TextView
+        android:id="@+id/away_team_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/main_margin"
+        android:text="@string/away_team"
+        app:layout_constraintBottom_toTopOf="@id/group_title"
+        app:layout_constraintEnd_toStartOf="@id/tv_away_team"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/home_team_title" />
+
+    <TextView
+        android:id="@+id/tv_away_team"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/away_team_title"
+        app:layout_constraintTop_toTopOf="@id/away_team_title"
+        tools:text="1" />
+
+    <TextView
+        android:id="@+id/group_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/main_margin"
+        android:text="@string/group"
+        app:layout_constraintBottom_toTopOf="@id/home_team_score_title"
+        app:layout_constraintEnd_toStartOf="@id/tv_group"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/away_team_title" />
+
+    <TextView
+        android:id="@+id/tv_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/group_title"
+        app:layout_constraintTop_toTopOf="@id/group_title"
+        tools:text="1" />
+
+    <TextView
+        android:id="@+id/home_team_score_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/main_margin"
+        android:text="@string/home_team_score"
+        app:layout_constraintBottom_toTopOf="@id/away_team_score_title"
+        app:layout_constraintEnd_toStartOf="@id/tv_home_team_score"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/group_title" />
+
+    <TextView
+        android:id="@+id/tv_home_team_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/home_team_score_title"
+        app:layout_constraintTop_toTopOf="@id/home_team_score_title"
+        tools:text="1" />
+
+    <TextView
+        android:id="@+id/away_team_score_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/main_margin"
+        android:text="@string/away_team_score"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/tv_away_team_score"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/home_team_score_title" />
+
+    <TextView
+        android:id="@+id/tv_away_team_score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/away_team_score_title"
+        app:layout_constraintTop_toTopOf="@id/away_team_score_title"
+        tools:text="1" />
+</androidx.constraintlayout.widget.ConstraintLayout>

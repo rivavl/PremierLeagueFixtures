@@ -1,5 +1,14 @@
 <resources>
     <string name="app_name">Premier League  Fixtures</string>
-    <string name="second_fragment">Second Fragment</string>
+    <string name="details_fragment">Details Fragment</string>
     <string name="first_fragment">First Fragment</string>
+    <string name="match_number">Match Number:</string>
+    <string name="round_number">Round Number:</string>
+    <string name="date">Date:</string>
+    <string name="location">Location:</string>
+    <string name="home_team">Home Team:</string>
+    <string name="away_team">Away Team:</string>
+    <string name="group">Group:</string>
+    <string name="home_team_score">Home Team Score:</string>
+    <string name="away_team_score">Away Team Score:</string>
 </resources>
