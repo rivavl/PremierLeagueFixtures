@@ -1,10 +1,11 @@
-package com.marina.premierleaguefixtures
+package com.marina.premierleaguefixtures.presentation.detail
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.marina.premierleaguefixtures.R
 import com.marina.premierleaguefixtures.databinding.FragmentDetailsBinding
 import com.marina.premierleaguefixtures.model.Match
 
