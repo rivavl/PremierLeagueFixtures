@@ -1,10 +1,13 @@
-package com.marina.premierleaguefixtures
+package com.marina.premierleaguefixtures.presentation
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.marina.premierleaguefixtures.R
 import com.marina.premierleaguefixtures.databinding.ActivityMainBinding
+import com.marina.premierleaguefixtures.presentation.detail.DetailsFragment
 import com.marina.premierleaguefixtures.model.Match
+import com.marina.premierleaguefixtures.presentation.list.ListFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,7 +31,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setFragment(FirstFragment.newInstance())
+        setFragment(ListFragment.newInstance())
         setupBottomNav()
     }
 
@@ -40,7 +43,7 @@ class MainActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.first_item -> {
                     setTitleActionBar(R.string.first_fragment)
-                    setFragment(FirstFragment.newInstance())
+                    setFragment(ListFragment.newInstance())
                     true
                 }
                 R.id.second_item -> {
