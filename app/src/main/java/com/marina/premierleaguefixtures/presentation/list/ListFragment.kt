@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.marina.premierleaguefixtures.R
+import com.marina.premierleaguefixtures.data.Resource
 import com.marina.premierleaguefixtures.databinding.FragmentListBinding
 import com.marina.premierleaguefixtures.presentation.adapter.MatchAdapter
 import com.marina.premierleaguefixtures.presentation.detail.DetailsFragment
@@ -42,8 +43,17 @@ class ListFragment : Fragment(R.layout.fragment_list) {
     }
 
     private fun observeViewModel() {
-        viewModel.matchesList.observe(viewLifecycleOwner) {
-            matchesListAdapter.submitList(it)
+        viewModel.matchesList.observe(viewLifecycleOwner) { data ->
+            when (data) {
+                is Resource.Success -> {
+                    setLoading(false)
+                    matchesListAdapter.submitList(data.data)
+                }
+                is Resource.Loading -> {
+                    setLoading(true)
+                }
+                is Resource.Error -> {}
+            }
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner) {
