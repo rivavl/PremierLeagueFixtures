@@ -37,6 +37,7 @@ class ListFragment : Fragment(R.layout.fragment_list) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this)[ListFragmentViewModel::class.java]
+        viewModel.app = requireActivity().application
         setupRecyclerView()
         setupClickListener()
         observeViewModel()
