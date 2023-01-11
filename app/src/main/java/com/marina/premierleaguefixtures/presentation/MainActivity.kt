@@ -6,26 +6,12 @@ import androidx.fragment.app.Fragment
 import com.marina.premierleaguefixtures.R
 import com.marina.premierleaguefixtures.databinding.ActivityMainBinding
 import com.marina.premierleaguefixtures.presentation.detail.DetailsFragment
-import com.marina.premierleaguefixtures.model.Match
+import com.marina.premierleaguefixtures.domain.entity.Match
 import com.marina.premierleaguefixtures.presentation.list.ListFragment
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-
-    private val match by lazy {
-        Match(
-            matchNumber = 1,
-            roundNumber = 1,
-            dateUtc = "2021-08-13 19:00:00",
-            location = "Brentford Community Stadium",
-            homeTeam = "Brentford",
-            awayTeam = "Arsenal",
-            group = null,
-            homeTeamScore = 2,
-            awayTeamScore = 0
-        )
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +34,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.second_item -> {
                     setTitleActionBar(R.string.details_fragment)
-                    setFragment(DetailsFragment.newInstance(match))
+                    setFragment(DetailsFragment.newInstance(1))
                     true
                 }
                 else -> false

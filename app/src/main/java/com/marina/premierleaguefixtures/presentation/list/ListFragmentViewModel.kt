@@ -1,29 +1,21 @@
 package com.marina.premierleaguefixtures.presentation.list
 
-import android.app.Application
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.marina.premierleaguefixtures.data.Resource
-import com.marina.premierleaguefixtures.data.local.AppDatabase
-import com.marina.premierleaguefixtures.data.local.DatabaseHelper
-import com.marina.premierleaguefixtures.data.remote.NetworkHelper
-import com.marina.premierleaguefixtures.data.remote.RetrofitInstance
-import com.marina.premierleaguefixtures.model.Match
+import androidx.lifecycle.*
+import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
+import androidx.lifecycle.viewmodel.CreationExtras
+import com.marina.premierleaguefixtures.domain.use_case.GetAllMatchesUseCase
+import com.marina.premierleaguefixtures.domain.util.Resource
+import com.marina.premierleaguefixtures.presentation.entity.MatchUI
+import com.marina.premierleaguefixtures.presentation.mapper.toUI
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class ListFragmentViewModel : ViewModel() {
+class ListFragmentViewModel(
+    private val useCase: GetAllMatchesUseCase
+) : ViewModel() {
 
-    // пока так, когда добавлю di, исправлю
-    private val api = RetrofitInstance.matchesApi
-    lateinit var app: Application
-    private val databaseHelper by lazy { DatabaseHelper(AppDatabase.getInstance(app).matchDao) }
-    private val apiHelper by lazy { NetworkHelper(api, databaseHelper) }
-
-    private val _matchesList = MutableLiveData<Resource<List<Match>>>()
-    val matchesList: LiveData<Resource<List<Match>>> get() = _matchesList
+    private val _matchesList = MutableLiveData<Resource<List<MatchUI>>>()
+    val matchesList: LiveData<Resource<List<MatchUI>>> get() = _matchesList
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> get() = _isLoading
@@ -34,12 +26,11 @@ class ListFragmentViewModel : ViewModel() {
     }
 
     private fun loadMatches() = viewModelScope.launch {
-        delay(100L)
-        apiHelper.getMatches().collect { result ->
+        useCase.invoke().collect { result ->
             when (result) {
                 is Resource.Success -> {
                     _matchesList.postValue(
-                        Resource.Success(result.data!!)
+                        Resource.Success(result.data!!.toUI())
                     )
                 }
                 is Resource.Loading -> {

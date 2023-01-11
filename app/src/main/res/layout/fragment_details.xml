@@ -175,4 +175,15 @@
         app:layout_constraintStart_toEndOf="@id/away_team_score_title"
         app:layout_constraintTop_toTopOf="@id/away_team_score_title"
         tools:text="1" />
+
+    <ProgressBar
+        android:id="@+id/progress_bar"
+        android:layout_width="wrap_content"
+        android:progressTint="@color/black"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
