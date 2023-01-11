@@ -1,5 +1,6 @@
 package com.marina.premierleaguefixtures.presentation.list
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,10 +11,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.marina.premierleaguefixtures.R
-import com.marina.premierleaguefixtures.data.Resource
+import com.marina.premierleaguefixtures.app.App
 import com.marina.premierleaguefixtures.databinding.FragmentListBinding
+import com.marina.premierleaguefixtures.domain.util.Resource
 import com.marina.premierleaguefixtures.presentation.adapter.MatchAdapter
 import com.marina.premierleaguefixtures.presentation.detail.DetailsFragment
+import com.marina.premierleaguefixtures.presentation.view_model_factory.ViewModelFactory
+import javax.inject.Inject
 
 class ListFragment : Fragment(R.layout.fragment_list) {
 
@@ -23,7 +27,20 @@ class ListFragment : Fragment(R.layout.fragment_list) {
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var matchesListAdapter: MatchAdapter
+
     private lateinit var viewModel: ListFragmentViewModel
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
+    private val component by lazy {
+        (requireActivity().application as App).component
+    }
+
+    override fun onAttach(context: Context) {
+        component.inject(this)
+        super.onAttach(context)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,8 +53,7 @@ class ListFragment : Fragment(R.layout.fragment_list) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this)[ListFragmentViewModel::class.java]
-        viewModel.app = requireActivity().application
+        viewModel = ViewModelProvider(this, viewModelFactory)[ListFragmentViewModel::class.java]
         setupRecyclerView()
         setupClickListener()
         observeViewModel()
@@ -53,7 +69,9 @@ class ListFragment : Fragment(R.layout.fragment_list) {
                 is Resource.Loading -> {
                     setLoading(true)
                 }
-                is Resource.Error -> {}
+                is Resource.Error -> {
+                    setLoading(false)
+                }
             }
         }
 
@@ -76,7 +94,7 @@ class ListFragment : Fragment(R.layout.fragment_list) {
         matchesListAdapter.onMatchItemClick = {
             parentFragmentManager.beginTransaction()
                 .addToBackStack(null)
-                .replace(R.id.fragment_container, DetailsFragment.newInstance(it))
+                .replace(R.id.fragment_container, DetailsFragment.newInstance(it.matchNumber))
                 .commit()
         }
     }

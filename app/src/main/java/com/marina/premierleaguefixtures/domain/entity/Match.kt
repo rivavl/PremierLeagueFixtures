@@ -1,4 +1,4 @@
-package com.marina.premierleaguefixtures.model
+package com.marina.premierleaguefixtures.domain.entity
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

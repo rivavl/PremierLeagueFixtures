@@ -9,7 +9,7 @@ import com.marina.premierleaguefixtures.data.local.model.MatchDB
 @Dao
 interface MatchDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun saveMatch(match: MatchDB)
+    suspend fun saveMatches(matches: List<MatchDB>)
 
     @Query("select * from `match`")
     suspend fun getMatches(): List<MatchDB>

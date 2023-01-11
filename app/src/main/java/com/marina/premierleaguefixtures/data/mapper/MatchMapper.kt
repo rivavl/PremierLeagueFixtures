@@ -2,9 +2,9 @@ package com.marina.premierleaguefixtures.data.mapper
 
 import com.marina.premierleaguefixtures.data.local.model.MatchDB
 import com.marina.premierleaguefixtures.data.remote.dto.MatchDto
-import com.marina.premierleaguefixtures.model.Match
+import com.marina.premierleaguefixtures.domain.entity.Match
 
-fun MatchDto.toUI(): Match {
+fun MatchDto.toDomain(): Match {
     return Match(
         matchNumber = matchNumber,
         roundNumber = roundNumber,
@@ -18,13 +18,13 @@ fun MatchDto.toUI(): Match {
     )
 }
 
-fun List<MatchDto>.toUI(): List<Match> {
+fun List<MatchDto>.toDomain(): List<Match> {
     return map {
-        it.toUI()
+        it.toDomain()
     }
 }
 
-fun MatchDB.toUI(): Match {
+fun MatchDB.toDomain(): Match {
     return Match(
         matchNumber = matchNumber,
         roundNumber = roundNumber,
@@ -38,9 +38,9 @@ fun MatchDB.toUI(): Match {
     )
 }
 
-fun List<MatchDB>.fromDBToUI(): List<Match> {
+fun List<MatchDB>.fromDBToDomain(): List<Match> {
     return map {
-        it.toUI()
+        it.toDomain()
     }
 }
 

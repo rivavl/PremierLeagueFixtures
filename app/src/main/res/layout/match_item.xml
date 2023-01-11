@@ -36,11 +36,10 @@
         <TextView
             android:id="@+id/tv_home_team_score"
             android:layout_width="wrap_content"
-
             android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintEnd_toEndOf="@id/tv_home_team_name"
-            app:layout_constraintStart_toStartOf="@id/tv_home_team_name"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_home_team_name"
             tools:text="3" />
 
@@ -48,9 +47,10 @@
             android:id="@+id/tv_away_team_score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="@id/tv_away_team_name"
-            app:layout_constraintStart_toStartOf="@id/tv_away_team_name"
-            app:layout_constraintTop_toTopOf="@id/tv_home_team_score"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_away_team_name"
             tools:text="3" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -8,13 +8,13 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.marina.premierleaguefixtures.R
 import com.marina.premierleaguefixtures.databinding.MatchItemBinding
-import com.marina.premierleaguefixtures.model.Match
+import com.marina.premierleaguefixtures.presentation.entity.MatchUI
 
 
 class MatchAdapter :
-    ListAdapter<Match, MatchAdapter.MatchViewHolder>(MatchDiffUtilCallback()) {
+    ListAdapter<MatchUI, MatchAdapter.MatchViewHolder>(MatchDiffUtilCallback()) {
 
-    var onMatchItemClick: ((Match) -> Unit)? = null
+    var onMatchItemClick: ((MatchUI) -> Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MatchViewHolder {
         val binding = MatchItemBinding
@@ -39,8 +39,8 @@ class MatchAdapter :
         }
     }
 
-    private fun setScoreColors(binding: MatchItemBinding, match: Match, context: Context) {
-        val colors = getScoreColors(match.homeTeamScore, match.awayTeamScore, context)
+    private fun setScoreColors(binding: MatchItemBinding, match: MatchUI, context: Context) {
+        val colors = getScoreColors(match, context)
         with(binding) {
             tvHomeTeamScore.setTextColor(colors.first)
             tvAwayTeamScore.setTextColor(colors.second)
@@ -49,13 +49,12 @@ class MatchAdapter :
     }
 
     private fun getScoreColors(
-        homeScore: Int,
-        awayScore: Int,
+        match: MatchUI,
         context: Context
     ): Pair<Int, Int> {
-        return if (homeScore > awayScore) {
+        return if (match.homeWins) {
             Pair(context.getColor(R.color.green), context.getColor(R.color.red))
-        } else if (awayScore > homeScore) {
+        } else if (match.awayWins) {
             Pair(context.getColor(R.color.red), context.getColor(R.color.green))
         } else {
             Pair(context.getColor(R.color.gray), context.getColor(R.color.gray))
@@ -65,12 +64,12 @@ class MatchAdapter :
 
     class MatchViewHolder(val binding: MatchItemBinding) : RecyclerView.ViewHolder(binding.root)
 
-    class MatchDiffUtilCallback : DiffUtil.ItemCallback<Match>() {
-        override fun areItemsTheSame(oldItem: Match, newItem: Match): Boolean {
+    class MatchDiffUtilCallback : DiffUtil.ItemCallback<MatchUI>() {
+        override fun areItemsTheSame(oldItem: MatchUI, newItem: MatchUI): Boolean {
             return oldItem.matchNumber == newItem.matchNumber
         }
 
-        override fun areContentsTheSame(oldItem: Match, newItem: Match): Boolean {
+        override fun areContentsTheSame(oldItem: MatchUI, newItem: MatchUI): Boolean {
             return oldItem == newItem
         }
 
