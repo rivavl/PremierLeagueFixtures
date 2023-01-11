@@ -1,6 +1,5 @@
 package com.marina.premierleaguefixtures.data.repository
 
-import android.util.Log
 import com.marina.premierleaguefixtures.data.local.MatchDao
 import com.marina.premierleaguefixtures.data.local.model.MatchDB
 import com.marina.premierleaguefixtures.data.mapper.fromDBToDomain
@@ -12,8 +11,9 @@ import com.marina.premierleaguefixtures.domain.repository.MatchRepository
 import com.marina.premierleaguefixtures.domain.util.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import javax.inject.Inject
 
-class MatchRepositoryImpl(
+class MatchRepositoryImpl @Inject constructor(
     private val api: MatchApi,
     private val dao: MatchDao
 ) : MatchRepository {
@@ -43,7 +43,7 @@ class MatchRepositoryImpl(
         }
     }
 
-    private suspend fun loadFromApi() : Resource<List<Match>>  {
+    private suspend fun loadFromApi(): Resource<List<Match>> {
         return try {
             val matches = api.getMatchesList()
             saveIntoDB(matches.fromDtoToDB())

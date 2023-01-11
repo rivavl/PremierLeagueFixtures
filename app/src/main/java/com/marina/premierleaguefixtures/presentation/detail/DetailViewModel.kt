@@ -9,8 +9,9 @@ import com.marina.premierleaguefixtures.domain.util.Resource
 import com.marina.premierleaguefixtures.presentation.entity.MatchUI
 import com.marina.premierleaguefixtures.presentation.mapper.toUI
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class DetailViewModel(
+class DetailViewModel @Inject constructor(
     private val useCase: GetMatchByIdUseCase
 ) : ViewModel() {
 

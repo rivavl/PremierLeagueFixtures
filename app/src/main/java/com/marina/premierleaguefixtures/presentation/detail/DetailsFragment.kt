@@ -1,22 +1,20 @@
 package com.marina.premierleaguefixtures.presentation.detail
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import com.marina.premierleaguefixtures.R
 import com.marina.premierleaguefixtures.app.App
-import com.marina.premierleaguefixtures.data.local.AppDatabase
-import com.marina.premierleaguefixtures.data.remote.RetrofitInstance
-import com.marina.premierleaguefixtures.data.repository.MatchRepositoryImpl
 import com.marina.premierleaguefixtures.databinding.FragmentDetailsBinding
-import com.marina.premierleaguefixtures.domain.repository.MatchRepository
-import com.marina.premierleaguefixtures.domain.use_case.GetMatchByIdUseCase
 import com.marina.premierleaguefixtures.domain.util.Resource
 import com.marina.premierleaguefixtures.presentation.entity.MatchUI
+import com.marina.premierleaguefixtures.presentation.view_model_factory.ViewModelFactory
+import javax.inject.Inject
 
 class DetailsFragment : Fragment(R.layout.fragment_details) {
 
@@ -24,26 +22,24 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
     private val binding: FragmentDetailsBinding
         get() = _binding ?: throw RuntimeException("FragmentDetailsBinding == null")
 
+    private lateinit var viewModel: DetailViewModel
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
+    private val component by lazy {
+        (requireActivity().application as App).component
+    }
+
     private val matchId by lazy {
         val args = requireArguments()
         args.getInt(MATCH_ID)
     }
 
-    // ---------------------------------------
-    val app by lazy { (requireActivity().application as App) }
-    val repo: MatchRepository by lazy {
-        MatchRepositoryImpl(
-            api = RetrofitInstance.matchesApi,
-            dao = AppDatabase.getInstance(app).matchDao
-        )
+    override fun onAttach(context: Context) {
+        component.inject(this)
+        super.onAttach(context)
     }
-    val useCase by lazy { GetMatchByIdUseCase(repo) }
-    //-----------------------------------------
-
-    private val viewModel: DetailViewModel by viewModels {
-        DetailViewModelFactory(useCase)
-    }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -56,6 +52,7 @@ class DetailsFragment : Fragment(R.layout.fragment_details) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel = ViewModelProvider(this, viewModelFactory)[DetailViewModel::class.java]
         viewModel.loadMatchInfo(matchId)
         observeViewModel()
     }

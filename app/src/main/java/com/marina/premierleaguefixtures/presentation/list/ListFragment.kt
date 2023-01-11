@@ -1,25 +1,23 @@
 package com.marina.premierleaguefixtures.presentation.list
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.marina.premierleaguefixtures.R
 import com.marina.premierleaguefixtures.app.App
-import com.marina.premierleaguefixtures.data.local.AppDatabase
-import com.marina.premierleaguefixtures.data.remote.RetrofitInstance
-import com.marina.premierleaguefixtures.data.repository.MatchRepositoryImpl
 import com.marina.premierleaguefixtures.databinding.FragmentListBinding
-import com.marina.premierleaguefixtures.domain.repository.MatchRepository
-import com.marina.premierleaguefixtures.domain.use_case.GetAllMatchesUseCase
 import com.marina.premierleaguefixtures.domain.util.Resource
 import com.marina.premierleaguefixtures.presentation.adapter.MatchAdapter
 import com.marina.premierleaguefixtures.presentation.detail.DetailsFragment
+import com.marina.premierleaguefixtures.presentation.view_model_factory.ViewModelFactory
+import javax.inject.Inject
 
 class ListFragment : Fragment(R.layout.fragment_list) {
 
@@ -30,21 +28,18 @@ class ListFragment : Fragment(R.layout.fragment_list) {
     private lateinit var recyclerView: RecyclerView
     private lateinit var matchesListAdapter: MatchAdapter
 
+    private lateinit var viewModel: ListFragmentViewModel
 
-    // ---------------------------------------
-    val app by lazy { (requireActivity().application as App) }
-    val repo: MatchRepository by lazy {
-        MatchRepositoryImpl(
-            api = RetrofitInstance.matchesApi,
-            dao = AppDatabase.getInstance(app).matchDao
-        )
+    @Inject
+    lateinit var viewModelFactory: ViewModelFactory
+
+    private val component by lazy {
+        (requireActivity().application as App).component
     }
 
-    val useCase by lazy { GetAllMatchesUseCase(repo) }
-
-    //-----------------------------------------
-    private val viewModel: ListFragmentViewModel by viewModels {
-        ListViewModelFactory(useCase)
+    override fun onAttach(context: Context) {
+        component.inject(this)
+        super.onAttach(context)
     }
 
     override fun onCreateView(
@@ -58,6 +53,7 @@ class ListFragment : Fragment(R.layout.fragment_list) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel = ViewModelProvider(this, viewModelFactory)[ListFragmentViewModel::class.java]
         setupRecyclerView()
         setupClickListener()
         observeViewModel()

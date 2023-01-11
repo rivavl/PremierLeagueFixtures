@@ -1,16 +1,17 @@
 package com.marina.premierleaguefixtures.presentation.list
 
-import androidx.lifecycle.*
-import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
-import androidx.lifecycle.viewmodel.CreationExtras
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.marina.premierleaguefixtures.domain.use_case.GetAllMatchesUseCase
 import com.marina.premierleaguefixtures.domain.util.Resource
 import com.marina.premierleaguefixtures.presentation.entity.MatchUI
 import com.marina.premierleaguefixtures.presentation.mapper.toUI
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class ListFragmentViewModel(
+class ListFragmentViewModel @Inject constructor(
     private val useCase: GetAllMatchesUseCase
 ) : ViewModel() {
 

@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import com.marina.premierleaguefixtures.R
 import com.marina.premierleaguefixtures.databinding.ActivityMainBinding
 import com.marina.premierleaguefixtures.presentation.detail.DetailsFragment
-import com.marina.premierleaguefixtures.domain.entity.Match
 import com.marina.premierleaguefixtures.presentation.list.ListFragment
 
 class MainActivity : AppCompatActivity() {
