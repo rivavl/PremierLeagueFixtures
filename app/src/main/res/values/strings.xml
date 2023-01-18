@@ -11,4 +11,5 @@
     <string name="group">Group:</string>
     <string name="home_team_score">Home Team Score:</string>
     <string name="away_team_score">Away Team Score:</string>
+    <string name="search">Find Team</string>
 </resources>

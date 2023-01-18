@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -56,7 +58,21 @@ class ListFragment : Fragment(R.layout.fragment_list) {
         viewModel = ViewModelProvider(this, viewModelFactory)[ListFragmentViewModel::class.java]
         setupRecyclerView()
         setupClickListener()
+        setupSearchQueryListener()
         observeViewModel()
+    }
+
+    private fun setupSearchQueryListener() {
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                viewModel.loadMatches(newText)
+                return false
+            }
+        })
     }
 
     private fun observeViewModel() {

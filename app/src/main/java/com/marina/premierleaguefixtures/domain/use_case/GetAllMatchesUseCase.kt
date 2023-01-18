@@ -9,7 +9,7 @@ import javax.inject.Inject
 class GetAllMatchesUseCase @Inject constructor(
     private val repository: MatchRepository
 ) {
-    suspend operator fun invoke(): Flow<Resource<List<Match>>> {
-        return repository.getAllMatches()
+    suspend operator fun invoke(query: String?): Flow<Resource<List<Match>>> {
+        return repository.getAllMatches(query)
     }
 }
