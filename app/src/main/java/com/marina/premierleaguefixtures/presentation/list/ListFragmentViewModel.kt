@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class ListFragmentViewModel @Inject constructor(
-    private val useCase: GetAllMatchesUseCase
+    private val getAllMatchesUseCase: GetAllMatchesUseCase
 ) : ViewModel() {
 
     private val _matchesList = MutableLiveData<Resource<List<MatchUI>>>()
@@ -23,11 +23,11 @@ class ListFragmentViewModel @Inject constructor(
 
 
     init {
-        loadMatches()
+        loadMatches("")
     }
 
-    private fun loadMatches() = viewModelScope.launch {
-        useCase.invoke().collect { result ->
+    fun loadMatches(query: String?) = viewModelScope.launch {
+        getAllMatchesUseCase.invoke(query).collect { result ->
             when (result) {
                 is Resource.Success -> {
                     _matchesList.postValue(

@@ -1,5 +1,6 @@
 package com.marina.premierleaguefixtures.data.repository
 
+import android.util.Log
 import com.marina.premierleaguefixtures.data.local.MatchDao
 import com.marina.premierleaguefixtures.data.local.model.MatchDB
 import com.marina.premierleaguefixtures.data.mapper.fromDBToDomain
@@ -18,10 +19,11 @@ class MatchRepositoryImpl @Inject constructor(
     private val dao: MatchDao
 ) : MatchRepository {
 
-    override suspend fun getAllMatches(): Flow<Resource<List<Match>>> = flow {
+    override suspend fun getAllMatches(query: String?): Flow<Resource<List<Match>>> = flow {
         emit(Resource.Loading())
-        emit(loadFromDB())
-        emit(loadFromApi())
+        emit(loadFromDB(query))
+        loadFromApi()
+        emit(loadFromDB(query))
     }
 
     override suspend fun getMatchById(id: Int): Flow<Resource<Match>> = flow {
@@ -34,27 +36,25 @@ class MatchRepositoryImpl @Inject constructor(
         }
     }
 
-    private suspend fun loadFromDB(): Resource<List<Match>> {
+    private suspend fun loadFromDB(query: String?): Resource<List<Match>> {
         return try {
-            val fromDB = dao.getMatches().fromDBToDomain()
+            val fromDB = dao.getMatches(query).fromDBToDomain()
             Resource.Success(fromDB)
         } catch (e: Exception) {
             Resource.Error()
         }
     }
 
-    private suspend fun loadFromApi(): Resource<List<Match>> {
-        return try {
+    private suspend fun loadFromApi() {
+        try {
             val matches = api.getMatchesList()
             saveIntoDB(matches.fromDtoToDB())
-            Resource.Success(matches.toDomain())
         } catch (e: Exception) {
-            Resource.Error()
+            Log.e(this.javaClass.simpleName, e.message.toString())
         }
     }
 
     private suspend fun saveIntoDB(matches: List<MatchDB>) {
         dao.saveMatches(matches)
     }
-
 }

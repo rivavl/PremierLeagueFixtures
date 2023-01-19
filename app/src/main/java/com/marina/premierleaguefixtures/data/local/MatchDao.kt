@@ -11,8 +11,8 @@ interface MatchDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun saveMatches(matches: List<MatchDB>)
 
-    @Query("select * from `match`")
-    suspend fun getMatches(): List<MatchDB>
+    @Query("select * from `match` where awayTeam like '%' || :query || '%' or homeTeam like '%' || :query || '%'")
+    suspend fun getMatches(query: String?): List<MatchDB>
 
     @Query("select * from `match` where matchNumber=:id")
     suspend fun getMatch(id: Int): MatchDB
